@@ -1,0 +1,43 @@
+<div class="col-md-7 mx-auto">
+    <div class="card mb-5">
+        <div class="card-header d-flex justify-content-between">
+            <h4 class="m-0"><b>Stock stadistics</b></h4>
+            <a href="/stock" class="btn btn-primary">Volver</a>
+        </div>
+        <div class="card-body">
+            <table class="table table-striped m-0">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <td><b>Id</b></td>
+                        <td><b>Item</b></td>
+                        <td><b>Amount</b></td>
+                        <td><b>Action</b></td>
+                        <td><b>User</b></td>
+                    </tr>
+                    {{#each stats }}
+                        <tr>
+                            <td><button type="button" class="button-none">{{id}}</button></td>
+                            <td><button type="button" class="button-none">{{item}}</button></td>
+                            <td><button type="button" class="button-none">{{amount}}</button></td>
+                            <td><button type="button" class="button-none">{{action}}</button></td>
+                            <td><button type="button" class="button-none">{{user_id}}</button></td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <div class="card mb-5">
+        <div class="card-header d-flex justify-content-between">
+            <h4 class="m-0"><b>Stadistics - Summary</b></h4>
+        </div>
+        <div class="card-body">
+            <div id="graph" class="bg-danger">
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+<script src="/js/stadistics.js"></script>

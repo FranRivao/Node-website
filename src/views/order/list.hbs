@@ -1,0 +1,83 @@
+<div class="col-md-9 mx-auto">
+    <div class="card mb-5">
+        {{#if items}}
+            <div class="row my-3 mx-1">
+                <div class="col-md-9 col-12">
+                    <div class="row m-0 p-0">
+                        {{#each items }}
+                            <div class="col-md-4 col-12">
+                                <div class="card mb-2">
+                                    <div class="card-header">
+                                        <h5><b>{{name}}</b></h5>
+                                    </div>
+                                    <div class="card-body">
+                                        <p class="mb-4">Price: $ {{price}}</p>
+                                            <div class="form-group mt-4">
+                                                {{#if amount}}
+                                                    <form action="/order/addToCart" method="POST" class="add_form">
+                                                        <input type="hidden" name="item" value="{{id}}">
+                                                        <input type="hidden" name="space" class="space">
+                                                        <h6 class="text-danger"><b>Available</b></h6>
+                                                        <input type="number" class="form-control mb-3" name="amount" value="1" min="1" max="20">
+                                                        <button class="btn btn-primary col-12">Add to cart <i class="fas fa-cart-plus"></i></button>
+                                                    </form>
+                                                {{else}}
+                                                    <form action="/order/stockRequest" method="post">
+                                                        <h6><b class="text-danger">{{name}} is not available</b></h6> 
+                                                        <input type="hidden" name="item" value="{{id}}">
+                                                        <input type="number" class="form-control mb-3" value="1" min="1" max="20" disabled>
+                                                        <button class="btn btn-warning col-12">Inform about it <i class="fab fa-stack-overflow"></i></button>
+                                                    </form>
+                                                {{/if}}
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+                        {{/each}}  
+                    </div>
+                </div>
+                <div class="col-md-3 col-12">
+                    <div class="dropdown">
+                        <button class="btn btn-secondary dropdown-toggle col-12" type="button" id="cart" data-bs-toggle="dropdown" aria-expanded="false">
+                            My cart <i class="fas fa-shopping-cart"></i>
+                        </button>
+                        <ul class="dropdown-menu col-12 mt-3" aria-labelledby="cart">
+                            {{#if cart}}
+                                {{#each cart }}
+                                    <li class="dropdown-item">
+                                        <div class="row m-0 p-0">
+                                            <div class="col-9 d-flex justify-content-between align-items-center">
+                                                <h6 class="m-0"><b>{{item}}</b></h6>
+                                                <h6 class="m-0 cart-amount">{{amount}}</h6>
+                                            </div>
+                                            <div class="col-3">
+                                                <a href="/order/deleteItem/{{id}}" class="btn btn-danger"><i class="fas fa-trash-alt"></i></a>
+                                            </div>
+                                        </div>
+                                    </li>
+                                {{/each}}
+                                {{else}}
+                                    <li class="dropdown-item">
+                                        <div class="row m-0 p-0">
+                                            <div class="col-9 d-flex justify-content-between align-items-center">
+                                                <h6 class="m-0"><b>You don't have items in <br> your cart</br></h6>
+                                            </div>
+                                        </div>
+                                    </li>
+                            {{/if}}
+                            
+                            <li><hr class="dropdown-divider"></li>
+                            <li class="dropdown-item disabled">Final price: $ {{price}}</li>
+                            <li class="dropdown-item disabled">Remaining space: <div id="cart-space">20/20</div></li>
+                            <li class="dropdown-item"><a href="/order/buy" class="btn btn-primary col-12">Buy now!</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        {{else}}
+            <h3 class="m-5">We don't have any products left! Come again later!</h3>
+        {{/if}}
+    </div>
+</div>
+
+<script src="js/cartItems.js"></script>

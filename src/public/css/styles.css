@@ -1,0 +1,45 @@
+body{
+    font-family: 'Oswald', sans-serif;
+    height: 800px;
+    background-image: url("https://www.thegourmetjournal.com/wp-content/uploads/2020/09/Pizza.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-attachment: fixed;
+}
+
+.button-none{
+    background: none;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+    cursor: pointer;
+    outline: inherit;
+}
+
+.roleSelect, .fieldSelect{
+    background-color: rgb(218, 218, 218);
+    border: 0px;
+    border-radius: 2px;
+    border-color: transparent;
+    width: 100%;
+    outline: none;
+    padding: 5px;
+}
+
+.roleSelect::-ms-expand{
+    display: none;
+}
+
+.roleSelect:hover{
+    background-color: rgb(218, 218, 218);
+}
+
+.roleSelect option {
+  background-color: rgb(218, 218, 218);
+  border: 0px;
+  border-radius: 2px;
+  border-color: transparent;
+  width: 200%;
+}

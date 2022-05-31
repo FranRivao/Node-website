@@ -1,0 +1,42 @@
+<div class="col-md-5 mx-auto">
+    <div class="card w-100">
+        <div class="card-header d-flex justify-content-between">
+            <h4 class="m-0"><b>Stock Requests</b></h4>
+            <a href="/stock" class="btn btn-primary">Volver</a>
+        </div>
+        <div class="card-body">
+             <table class="table table-striped m-0">
+                <thead></thead>
+                <tbody>
+                    <tr>
+                        <td><b>Id</b></td>
+                        <td><b>Item requested</b></td>
+                        <td><b>Request by userId</b></td>
+                        <td><b>Action</b></td>
+                    </tr>
+                    {{#each request }}
+                        <tr>
+                            <td>{{id}}</td>
+                            <td>{{requested}}</td>
+                            <td>{{user_id}}</td>
+                            <td>
+                                <form action="/stock/renew" method="post">
+                                    <div class="row">
+                                        <div class="col-lg-6 col-12">
+                                            <input type="hidden" name="id" value="{{requested}}">
+                                            <input type="hidden" name="field" value="a">
+                                            <input type="number" class="form-control" name="content" value="1" min="1">
+                                        </div>
+                                        <div class="col-lg-6 col-12">
+                                            <button class="btn btn-primary">Add Stock</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                    {{/each}}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

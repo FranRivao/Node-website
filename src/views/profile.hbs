@@ -1,0 +1,87 @@
+<div class="col-md-7 mx-auto">
+    <div class="card">
+        <div class="card-header">
+            <h4 class="m-0"><b>Profile</b></h4>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-4">
+                    <button class="btn btn-primary mb-3" type="button" id="info-panel-btn">
+                        Account Info panel
+                    </button>
+                    <button class="btn btn-primary mb-3" type="button" id="password-panel-btn">
+                        Change password panel
+                    </button>
+                    <button class="btn btn-primary mb-3" type="button" id="username-panel-btn">
+                        Change username panel
+                    </button>
+                    {{!-- <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target=".multi-collapse" aria-expanded="false" aria-controls="multiCollapseExample1 multiCollapseExample2">Toggle both elements</button> --}}
+                </div>
+                <div class="col-md-8">
+                    <div id="info-panel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4><b>Account info panel</b></h4>
+                            </div>
+                            <div class="card-body">
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <p><b>Id: </b>{{user.id}}</p>
+                                        <p><b>Username: </b>{{user.username}}</p>
+                                        <p><b>Fullname </b>{{user.fullname}}</p>
+                                        <p><b>Role: </b>{{user.role}}</p>
+                                    </div>
+                                    <div class="col-md-7">
+                                        <img class="rounded mx-auto d-block" width="200" src="https://d500.epimg.net/cincodias/imagenes/2016/07/04/lifestyle/1467646262_522853_1467646344_noticia_normal.jpg">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse multi-collapse" id="password-panel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4><b>Change password panel</b></h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="/profile/changePassword" method="post">
+                                    <div class="form-group mb-3">
+                                        <input type="password" class="form-control" name="actual_password" placeholder="Actual password:">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="password" class="form-control" name="password" placeholder="New password:">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success">Submit changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="collapse multi-collapse" id="username-panel">
+                        <div class="card">
+                            <div class="card-header">
+                                <h4><b>Change username panel</b></h4>
+                            </div>
+                            <div class="card-body">
+                                <form action="/profile/changeUsername" method="post">
+                                    <div class="form-group mb-3">
+                                        <input type="password" class="form-control" name="password" placeholder="Password:">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <input type="text" class="form-control" name="username" placeholder="New username:">
+                                    </div>
+                                    <div class="form-group">
+                                        <button class="btn btn-success">Submit changes</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="js/profile.js"></script>
