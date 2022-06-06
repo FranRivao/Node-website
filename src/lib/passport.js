@@ -17,9 +17,12 @@ passport.use('local.signup', new LocalStrategy({
         password,
         fullname
     };
+    const link = "https://img.freepik.com/vector-gratis/perfil-dibujo-logo-doodle-icono-aislado-sobre-fondo-oscuro_159242-1282.jpg";
+    
     newUser.password = await encryptPassword(password);
     const result = await pool.query('INSERT INTO users SET ?', [newUser]);
     newUser.id = result.insertId;
+    await pool.query('INSERT INTO img SET ?', {user_id: newUser.id, link});
     return done(null, newUser);
 }));
 
@@ -52,9 +55,7 @@ passport.use(new GoogleStrategy({
     passReqToCallback   : true
   },
   function(request, accessToken, refreshToken, profile, done) {
-    // User.findOrCreate({ googleId: profile.id }, function (err, user) {
       return done(null, profile);
-    // });
   }
 ));
 

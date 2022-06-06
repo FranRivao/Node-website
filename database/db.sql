@@ -23,6 +23,14 @@ CREATE TABLE users(
     CONSTRAINT fk_role FOREIGN KEY (role) REFERENCES roles(id)
 );
 
+-- Img Table
+CREATE TABLE img(
+    id INT(11) NOT NULL PRIMARY KEY AUTO_INCREMENT,
+    user_id INT(11) NOT NULL,
+    link VARCHAR(200) NOT NULL,
+    CONSTRAINT fk_id FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 -- INSERT INTO users(username, password, fullname, role) VALUES('Admin', 'Administrador', 'Administrador', 2);
 
 -- Items Table

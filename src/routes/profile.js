@@ -1,18 +1,49 @@
 // Requirements
 const express = require('express');
 const router = express.Router();
-const { isLoggedIn } = require('../lib/auth');
-const { getUserPasswordHash, changePassword, changeUsername, usernameExists } = require('../lib/users');
-const { matchPassword, encryptPassword } = require('../lib/auth');
+const multer = require('multer');
+const {v4: uuidv4} = require('uuid'); 
+const path = require('path');
+const fs = require('fs')
+const { getUserPasswordHash, getUserImg, changePassword, changeUsername, usernameExists, uploadUserImg } = require('../lib/users');
+const { isLoggedIn, matchPassword, encryptPassword } = require('../lib/auth');
 
-router.get('/', isLoggedIn, (req, res) => {
+// Multer
+const storage = multer.diskStorage({
+    filename: (req, file, cb) => {
+        cb(null, uuidv4() + path.extname(file.originalname).toLowerCase())
+    },
+    destination: path.join(__dirname, '../public/uploads'),
+});
+
+const upload = multer({
+    storage,
+    dest: path.join(__dirname, '../public/uploads'),
+    limits: {fileSize: 5000000},
+    fileFilter: (req, file, cb) => {
+        const fileTypes = /jpeg|png|gif|jpg/;
+        const mimetype = fileTypes.test(file.mimetype);
+        const extname = fileTypes.test(path.extname(file.originalname));
+
+        if(mimetype && extname) {
+            return cb(null, true);
+        }
+        cb("Error: el archivo debe ser una imagen");
+    }
+}).single('image');
+
+// Routes
+router.get('/', isLoggedIn, async (req, res) => {
+    const img = await getUserImg(req.user.id);
+
     const user = {
         id: req.user.id,
         username: req.user.username,
         fullname: req.user.fullname,
         role: req.user.role == 2 ? "admin" : "user",
+        img: img[0].link,
     }
-    res.render('profile', {user});
+    res.render('profile/index', {user});
 })
 
 router.post('/changePassword', isLoggedIn, async (req, res) => {
@@ -53,8 +84,23 @@ router.post('/changeUsername', isLoggedIn, async (req, res) => {
         }
     } else {
         req.flash('error', 'The password is incorrect or the username is already in use');
-        res.status(200).redirect('/profile')
+        res.status(200).redirect('/profile');
     }
+});
+
+router.post('/uploadImg', isLoggedIn, upload, async (req, res) => {
+    const id = req.user.id;
+    const link = "http://localhost:4000/uploads/" + req.file.filename;
+    let { actualLink } = req.body;
+    actualLink = '../public' + actualLink.slice(21);
+
+    try {
+        fs.unlinkSync(path.join(__dirname, actualLink));
+    } catch (e) {
+        console.log(e);
+    }
+    await uploadUserImg(id, link);
+    res.redirect('/profile');
 });
 
 // Exports
